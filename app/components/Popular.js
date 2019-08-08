@@ -1,5 +1,23 @@
 import React from 'react'
 
+function LanguagesNav ({selected, onUpdateLanguage}){
+    const languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS','Python']
+    return (
+        <ul className='flex-center'>
+            {languages.map((language)=>(
+                <li key={language}>
+                    <button 
+                        className='btn-clear nav-link'
+                        style = {language === selected ? { color :'red'} : null}
+                        onClick={()=>onUpdateLanguage(language)}>
+                    {language}
+                    </button>
+                </li>
+            ))}
+        </ul>
+    )
+}
+
 export default class Popular extends React.Component {
     constructor(props){
         super(props)
@@ -7,9 +25,10 @@ export default class Popular extends React.Component {
         this.state = {
             selectedLanguage: 'All'
         }
+        console.log("here",this);
         this.updateLanguage = this.updateLanguage.bind(this)
     }
-    
+
     updateLanguage (selectedLanguage){
         this.setState({
             selectedLanguage
@@ -17,21 +36,15 @@ export default class Popular extends React.Component {
         console.log(selectedLanguage);
     }
     render(){
+        const { selectedLanguage } = this.state
 
-        const languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS','Python']
         return (
-            <ul className='flex-center'>
-                {languages.map((language)=>(
-                    <li key={language}>
-                        <button 
-                            className='btn-clear nav-link'
-                            style = {language===this.state.selectedLanguage ? { color :'red'} : null}
-                            onClick={()=>this.updateLanguage(language)}>
-                        {language}
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            <React.Fragment>
+                <LanguagesNav
+                    selected= {selectedLanguage}
+                    onUpdateLanguage = {this.updateLanguage}
+                />
+            </React.Fragment>
         )
     }
 }
